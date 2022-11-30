@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+
+      <div class="d-flex justify-content-between align-items-center">
+        <h2>View extra food</h2>
+        <ol>
+          <li><a href="{% url 'administrator_panel' %}">Administrator Panel</a></li>
+          <li><a href="{% url 'extra_food' %}">Extra Food</a></li>
+          <li>View extra food</li>
+        </ol>
+      </div>
+
+    </div>
+</section><!-- End Breadcrumbs -->
+<div class="container">
+    {% if not extra_foods %}
+    <br>
+    <br>
+    <div class="container">
+        Currently there are no extra foods!
+    </div>
+    <br>
+    <br>
+    {% else %}
+    <table class="table">
+        <thead>
+          <tr>
+            <td scope="col">Name</td>
+            <td scope="col">Delete Extra Food</td>
+          </tr>
+        </thead>
+        <tbody>
+            {% for extra in extra_foods %}
+          <tr>
+            <td>{{ extra.name }}</td>
+            <td><a onclick="return confirm('Are you sure you want to delete this extra food?')" class="btn btn-danger" href="{% url 'delete_extra_food' extra.id %}">Delete Menu</a></td>
+          </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+      {% endif %}
+</div>
+{% endblock %}

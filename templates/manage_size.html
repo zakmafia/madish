@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+
+      <div class="d-flex justify-content-between align-items-center">
+        <h2>Manage Size of Food</h2>
+        <ol>
+          <li><a href="{% url 'administrator_panel' %}">Administrator Panel</a></li>
+          <li>Manage Size of Food</li>
+        </ol>
+      </div>
+
+    </div>
+</section><!-- End Breadcrumbs -->
+<section class="inner-page">
+    <div class="container">
+        {% include 'includes/alerts.html' %}
+        <form class="row gy-2 gx-3 align-items-center" action="{% url 'manage_size' %}" method="POST">
+        {% csrf_token %}
+        <div class="col-auto">
+        {{ form.size }}
+        </div>
+        <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+        <div class="col-auto">
+            <a href="{% url 'view_available_size' %}" class="btn btn-outline-primary">View Available Size</a>
+        </div>
+    </form>
+</div>
+</section>
+{% endblock %}

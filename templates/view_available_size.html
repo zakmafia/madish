@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+
+      <div class="d-flex justify-content-between align-items-center">
+        <h2>View Available Size</h2>
+        <ol>
+          <li><a href="{% url 'administrator_panel' %}">Administrator Panel</a></li>
+          <li><a href="{% url 'extra_food' %}">Manage Size</a></li>
+          <li>View Available Size</li>
+        </ol>
+      </div>
+
+    </div>
+</section><!-- End Breadcrumbs -->
+<div class="container">
+    {% if not sizes %}
+    <br>
+    <br>
+    <div class="container">
+        Currently there are no available size!
+    </div>
+    <br>
+    <br>
+    {% else %}
+    <table class="table">
+        <thead>
+          <tr>
+            <td scope="col">Size</td>
+            <td scope="col">Delete Size</td>
+          </tr>
+        </thead>
+        <tbody>
+            {% for size in sizes %}
+          <tr>
+            <td>{{ size.size }}</td>
+            <td><a onclick="return confirm('Are you sure you want to delete this size?')" class="btn btn-danger" href="{% url 'delete_size' size.id %}">Delete Menu</a></td>
+          </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+      {% endif %}
+</div>
+{% endblock %}
