@@ -1,12 +1,12 @@
 from django import forms
 from django.forms import ModelForm
-from .models import FoodMenu, Size, Extra
+from .models import FoodMenu
 
 class FoodMenuForm(ModelForm):
     image = forms.ImageField()
     class Meta:
         model = FoodMenu
-        fields = ['name', 'image', 'detail', 'price', 'has_size']
+        fields = ['name', 'image', 'detail', 'price']
 
         def __init__(self, *args, **kwargs):
             super(FoodMenuForm, self).__init__(*args, **kwargs)
@@ -15,27 +15,3 @@ class FoodMenuForm(ModelForm):
             self.fields['price'].widget.attrs['placeholder'] = 'Enter the price'
             for field in self.fields:
                 self.fields[field].widget.attrs['class'] = 'form-control'
-
-        
-class ExtraForm(ModelForm):
-    class Meta:
-        model = Extra
-        fields = ['name',]
-
-    def __init__(self, *args, **kwargs):
-        super(ExtraForm, self).__init__(*args, **kwargs)
-        self.fields['name'].widget.attrs['placeholder'] = 'Enter the name'
-        for field in self.fields:
-            self.fields[field].widget.attrs['class'] = 'form-control'
-
-
-class SizeForm(ModelForm):
-    class Meta:
-        model = Size
-        fields = ['size',]
-
-    def __init__(self, *args, **kwargs):
-        super(SizeForm, self).__init__(*args, **kwargs)
-        self.fields['size'].widget.attrs['placeholder'] = 'Enter the size'
-        for field in self.fields:
-            self.fields[field].widget.attrs['class'] = 'form-control'

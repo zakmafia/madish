@@ -17,9 +17,27 @@
 </section><!-- End Breadcrumbs -->
 <section class="inner-page">
   <div class="container">
-    <p>
-      Example inner page template
-    </p>
+    <table class="table">
+      <thead>
+        <tr>
+          <td scope="col">Email</td>
+        </tr>
+      </thead>
+      <tbody>
+          {% for order in orders %}
+        <tr>
+          <td
+          {% if  user == order.ordering_user  %} 
+          style="background-color: yellow;"
+          {% endif %}
+          >
+            {{ order.ordering_user.email }}
+          </td>
+        </tr>
+          {% endfor %}
+      </tbody>
+    </table>
   </div>
 </section>
+
 {% endblock %}

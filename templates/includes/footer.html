@@ -36,6 +36,19 @@
 
   <!-- Template Main JS File -->
   <script src="{% static 'assets/js/main.js'%}"></script>
-
+  {% comment %} <script>
+    function autorefresh(){
+      setInterval('refreshPage()', 5000);
+    }
+    function refreshPage(){
+      $.ajax({
+        url: '{% url 'order_traffic' %}',
+        success: function(data) {
+          $('#console').html(data)
+        }
+      });
+    }
+  </script>
+  <script>autorefresh()</script> {% endcomment %}
 </body>
 </html>

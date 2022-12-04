@@ -28,20 +28,27 @@
                           <img class="rounded" src="{{ menu.image.url }}" width="150" height="100"/>
                       </div>
                       <div class="col-md-8 col-sm-12">
-                          <div class="d-flex flex-row">
                               <div class="form-group form-check">
-                                  <input type="checkbox" name="items[]" class="form-check-input" value="{{ menu.pk }}">
+                                <input type="hidden" id="hidden">
+                                  <input type="checkbox" id="{{ menu.pk }}" name="items" class="form-check-input" value="{{ menu.pk }}">
                                   <label class="form-check-label">{{ menu.name }}</label>
                               </div>
-                         </div>
+                              <br>
+                              <div class="form-group">
+                                <p class="font-weight-bold pl-5">{{ menu.price }}</p>
+                              </div>
+                              <div class="form-group">
+                                <input type="number" id="quantity_{{ menu.id }}" name="quantities" min="1" max="10" disabled="true" value="1">
+                              </div>
                          <p>{{ menu.description }}</p>
                       </div>
-                      <br>
-                      <p class="font-weight-bold pl-5">{{ menu.price }}</p>
-                      <br>
-                      
                     </div>
                     <hr/>
+                    <script>
+                      document.getElementById('{{ menu.pk }}').onchange = function() {
+                        document.getElementById('quantity_{{ menu.pk }}').disabled = !this.checked;
+                      }
+                    </script>
                  {% endfor %}
                 </div>
                 <button class="btn btn-dark mt-5" type="submit">Place Order!</button>
