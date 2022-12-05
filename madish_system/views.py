@@ -138,7 +138,8 @@ def order(request):
         items = request.POST.getlist('items')
         quantities = request.POST.getlist('quantities')
         comment_box = request.POST['comment_box']
-        extra_food = request.POST['extra_food']
+        extra_food = request.POST['extra_food'] if 'extra_food' in request.POST else False
+        
 
         for item in items:
             menu_item = FoodMenu.objects.get(pk__contains=int(item))

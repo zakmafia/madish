@@ -42,7 +42,7 @@ class UserOrder(models.Model):
     ready = models.BooleanField('Ready', default=False)
     delivered = models.BooleanField('Delivered', default=False)
     user_comment = models.TextField('User Comment', max_length=255, blank=True)
-    extra_food = models.CharField('Extra Food', max_length=255, blank=True)
+    extra_food = models.CharField('Extra Food', max_length=255, blank=True, null=True)
     created_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
