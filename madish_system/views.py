@@ -1,15 +1,18 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import FoodMenu, UserOrder
-from .forms import FoodMenuForm
+from .models import FoodMenu, UserOrder, Category
+from .forms import FoodMenuForm, CategoryForm
 
 # Create your views here.
 def main_page(request):
     return render(request, 'main_page.html')
 
+@login_required(login_url='login')
 def administrator_panel(request):
     return render(request, 'administrator.html')
 
+@login_required(login_url='login')
 def place_order(request):
     menus = FoodMenu.objects.all()
 
@@ -18,6 +21,7 @@ def place_order(request):
     }
     return render(request, 'place_order.html', context)
 
+@login_required(login_url='login')
 def order_history(request):
     orders = UserOrder.objects.filter(ordering_user=request.user).order_by('-id')
     context = {
@@ -26,12 +30,72 @@ def order_history(request):
     return render(request, 'order_history.html', context)
 
 def order_traffic(request):
-    orders = UserOrder.objects.all().order_by('-id')
+    orders = UserOrder.objects.filter(delivered=False).order_by('-id')
     context = {
         'orders': orders,
     }
     return render(request, 'order_traffic.html', context)
 
+@login_required(login_url='login')
+def order_ready(request):
+    orders = UserOrder.objects.filter(delivered=False).order_by('-id')
+    context = {
+        'orders': orders
+    }
+    return render(request, 'order_ready.html', context)
+
+@login_required(login_url='login')
+def make_ready(request, order_id):
+    order = UserOrder.objects.get(id=order_id)
+    order.ready = True
+    order.save()
+    messages.success(request, 'This order is ready!')
+    return redirect('order_ready')
+
+@login_required(login_url='login')
+def make_delivered(request, order_id):
+    order = UserOrder.objects.get(id=order_id)
+    if not order.ready:
+        messages.error(request, 'Make this order ready first!')
+        return redirect('order_ready')
+    else:
+        order.delivered = True
+        order.save()
+        messages.success(request, 'This order is delivered!')
+        return redirect('order_ready')
+    
+@login_required(login_url='login')
+def create_category(request):
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'You have successfully created a new category')
+            return redirect('create_category')
+        else:
+            messages.error(request, 'This category already exists!')
+    else:
+        form = CategoryForm
+    context = {
+        'form': form
+    }
+    return render(request, 'create_category.html', context)
+
+@login_required(login_url='login')
+def view_category(request):
+    view_categories = Category.objects.all()
+    context = {
+        'view_categories': view_categories
+    }
+    return render(request, 'view_category.html', context)
+
+@login_required(login_url='login')
+def delete_category(request, category_id):
+    category = Category.objects.get(id=category_id)
+    category.delete()
+    return redirect('view_category')
+
+@login_required(login_url='login')
 def create_menu(request):
     if request.method == 'POST':
         form = FoodMenuForm(request.POST, request.FILES)
@@ -48,6 +112,7 @@ def create_menu(request):
     }       
     return render(request, 'create_menu.html', context)
 
+@login_required(login_url='login')
 def view_menu(request):
     food_menus = FoodMenu.objects.all()
     context = {
@@ -55,11 +120,13 @@ def view_menu(request):
     }
     return render(request, 'view_menu.html', context)
 
+@login_required(login_url='login')
 def delete_menu(request, menu_id):
     menu = FoodMenu.objects.get(id=menu_id)
     menu.delete()
     return redirect('view_menu')
 
+@login_required(login_url='login')
 def order(request):
     order_items = {
         'items': [],
@@ -106,3 +173,7 @@ def order(request):
     }
 
     return render(request, 'order_confirmation.html', context)
+
+
+def contact_us(request):
+    return render(request, 'contact_us.html')

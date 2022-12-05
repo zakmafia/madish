@@ -17,11 +17,13 @@
           {% endif %}
           {% if user.id is None %}
           <li><a class="nav-link scrollto" href="#about">About</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'contact_us' %}">Contact Us</a></li>
           <li><a class="getstarted scrollto" href="{% url 'register' %}">Open Account</a></li>
           <li><a class="getstarted scrollto" href="{% url 'login' %}">Sign In</a></li>
           {% else %}
-          <li><a class="nav-link scrollto" href="{% url 'place_order' %}">Place Order</a></li>
           <li><a class="nav-link scrollto" href="{% url 'order_history' %}">Order History</a></li>
+          <li><a class="getstarted scrollto" href="{% url 'order_ready' %}">Ready Order</a></li>
+          <li><a class="getstarted scrollto" href="{% url 'place_order' %}">Place Order</a></li>
           <li><a class="getstarted scrollto" href="{% url 'order_traffic' %}">Order Traffic</a></li>
           <li><small class="nav-link scrollto">|</small></li>
           <li><small class="nav-link scrollto">Welcome {{ user.first_name }}</small></li>

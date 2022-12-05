@@ -1,17 +1,27 @@
 from django import forms
 from django.forms import ModelForm
-from .models import FoodMenu
+from .models import FoodMenu, Category
+
+class CategoryForm(ModelForm):
+    class Meta:
+        model = Category
+        fields = ['name',]
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter the name'})
+        }
+
 
 class FoodMenuForm(ModelForm):
     image = forms.ImageField()
+    category = forms.ModelMultipleChoiceField(
+        queryset=Category.objects.all(),
+        widget=forms.CheckboxSelectMultiple()
+        )
     class Meta:
         model = FoodMenu
-        fields = ['name', 'image', 'detail', 'price']
-
-        def __init__(self, *args, **kwargs):
-            super(FoodMenuForm, self).__init__(*args, **kwargs)
-            self.fields['name'].widget.attrs['placeholder'] = 'Enter the name'
-            self.fields['detail'].widget.attrs['placeholder'] = 'Enter the detail'
-            self.fields['price'].widget.attrs['placeholder'] = 'Enter the price'
-            for field in self.fields:
-                self.fields[field].widget.attrs['class'] = 'form-control'
+        fields = ['name', 'image', 'detail', 'price', 'category']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter the name'}),
+            'detail': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Enter the detail'}),
+            'price': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter the price'}),
+        }

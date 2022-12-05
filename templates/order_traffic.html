@@ -2,6 +2,7 @@
 {% load static %}
 {% block content %}
 <!-- ======= Breadcrumbs ======= -->
+<div id="console">
 <section id="breadcrumbs" class="breadcrumbs">
     <div class="container">
 
@@ -32,6 +33,9 @@
           {% endif %}
           >
             {{ order.ordering_user.email }}
+            {% if order.ready %}
+              <span style="background-color: green; margin-left: 60em; padding: 8px; color: white;"> Ready </span>
+            {% endif %}
           </td>
         </tr>
           {% endfor %}
@@ -41,3 +45,4 @@
 </section>
 
 {% endblock %}
+</div>

@@ -21,6 +21,7 @@
           <tr>
             <td scope="col">Name</td>
             <td scope="col">Price</td>
+            <td scope="col">Category</td>
             <td scope="col">Detail</td>
             <td scope="col">Image</td>
             <td scope="col">Delete Menu</td>
@@ -31,6 +32,11 @@
           <tr>
             <td>{{ menu.name }}</td>
             <td>{{ menu.price }} ETB</td>
+            <td>
+              {% for item in menu.category.all %}
+              {{ item }} || 
+              {% endfor %}
+            </td>
             <td>{{ menu.detail }}</td>
             <td><img src="{{ menu.image.url }}" height=200 width=300></td>
             <td><a onclick="return confirm('Are you sure you want to delete this menu?')" class="btn btn-danger" href="{% url 'delete_menu' menu.id %}">Delete Menu</a></td>

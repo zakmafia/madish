@@ -29,6 +29,8 @@ class UserOrder(models.Model):
     food_menu = models.ManyToManyField('FoodMenu', related_name='order')
     price = models.DecimalField(max_digits=7, decimal_places=2)
     quantity = models.PositiveIntegerField(validators=[MinValueValidator(1)], default=1)
+    ready = models.BooleanField('Ready', default=False)
+    delivered = models.BooleanField('Delivered', default=False)
     created_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

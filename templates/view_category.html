@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+
+      <div class="d-flex justify-content-between align-items-center">
+        <h2>View your category</h2>
+        <ol>
+          <li><a href="{% url 'administrator_panel' %}">Administrator Panel</a></li>
+          <li>View your category</li>
+        </ol>
+      </div>
+
+    </div>
+</section><!-- End Breadcrumbs -->
+<div class="container">
+    <table class="table">
+        <thead>
+          <tr>
+            <td scope="col">Name</td>
+            <td scope="col">Delete Category</td>
+          </tr>
+        </thead>
+        <tbody>
+            {% for category in view_categories %}
+          <tr>
+            <td>{{ category.name }}</td>
+            <td><a onclick="return confirm('Are you sure you want to delete this category?')" class="btn btn-danger" href="{% url 'delete_category' category.id %}">Delete Category</a></td>
+          </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+</div>
+{% endblock %}

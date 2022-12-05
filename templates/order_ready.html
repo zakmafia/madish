@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+
+      <div class="d-flex justify-content-between align-items-center">
+        <h2>Ready Order</h2>
+        <ol>
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li>Ready Order</li>
+        </ol>
+      </div>
+
+    </div>
+</section><!-- End Breadcrumbs -->
+<section class="inner-page">
+  <div class="container">
+    {% include 'includes/alerts.html' %}
+    <table class="table">
+      <thead>
+        <tr>
+          <td scope="col">Email</td>
+          <td scope="col">Ready</td>
+          <td scope="col">Delivered</td>
+        </tr>
+      </thead>
+      <tbody>
+          {% for order in orders %}
+        <tr>
+          <td>{{ order.ordering_user.email }}</td>
+          <td>
+            <a 
+            href="{% url 'make_ready' order.id %}"
+            {% if not order.ready %}
+            class="btn btn-warning"
+            {% else %}
+            class="btn btn-success"
+            {% endif %}
+            >
+            Ready
+            </a>
+    </td>
+          <td><a
+            href="{% url 'make_delivered' order.id %}"
+            {% if not order.delivered %}
+            class="btn btn-warning"
+            {% else %}
+            class="btn btn-success"
+            {% endif %}
+            >
+            Delivered
+        </a>
+    </td>
+        </tr>
+          {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+{% endblock %}

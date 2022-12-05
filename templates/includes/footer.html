@@ -36,9 +36,9 @@
 
   <!-- Template Main JS File -->
   <script src="{% static 'assets/js/main.js'%}"></script>
-  {% comment %} <script>
+  <script>
     function autorefresh(){
-      setInterval('refreshPage()', 5000);
+      setInterval('refreshPage()', 6000);
     }
     function refreshPage(){
       $.ajax({
@@ -49,6 +49,6 @@
       });
     }
   </script>
-  <script>autorefresh()</script> {% endcomment %}
+  <script>autorefresh()</script>
 </body>
 </html>
