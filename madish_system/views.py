@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import FoodMenu, UserOrder, Category
+from .models import FoodMenu, UserOrder, Category, ExtraFood
 from .forms import FoodMenuForm, CategoryForm
 
 # Create your views here.
@@ -15,9 +15,11 @@ def administrator_panel(request):
 @login_required(login_url='login')
 def place_order(request):
     menus = FoodMenu.objects.all()
+    extra_food_list = ExtraFood.objects.all()
 
     context = {
         'menus': menus,
+        'extra_food_list': extra_food_list,
     }
     return render(request, 'place_order.html', context)
 
@@ -135,6 +137,8 @@ def order(request):
     if request.method == 'POST':
         items = request.POST.getlist('items')
         quantities = request.POST.getlist('quantities')
+        comment_box = request.POST['comment_box']
+        extra_food = request.POST['extra_food']
 
         for item in items:
             menu_item = FoodMenu.objects.get(pk__contains=int(item))
@@ -163,7 +167,7 @@ def order(request):
             quantity += int(item['quantity'])
             item_ids.append(item['id'])
 
-        order = UserOrder.objects.create(price=price, ordering_user=request.user, quantity=quantity)
+        order = UserOrder.objects.create(price=price, ordering_user=request.user, quantity=quantity, user_comment=comment_box, extra_food=extra_food)
         order.food_menu.add(*item_ids)
 
 

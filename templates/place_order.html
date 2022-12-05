@@ -17,8 +17,8 @@
 </section><!-- End Breadcrumbs -->
 <section class="inner-page">
   <div class="container mb-5">
-    <div class="row justify-content-center mt-1">
-        <div class="col-md-12 col-sm-12 p-4">
+    <div class="row mt-1">
+        <div class="col-md-12 col-sm-12">
             <form action="{%url 'order'%}" method="POST">
                 {% csrf_token %}
                 <div class="pt-5">
@@ -51,7 +51,26 @@
                     </script>
                  {% endfor %}
                 </div>
+                <br>
+                <div class="form-group">
+                  <label>With</label>
+                  <input type="checkbox" id="with_extra" name="with_extra" class="form-check-input">
+                  <select name="extra_food" id="extra_food" disabled="true">
+                    {% for item in extra_food_list %}
+                    <option>{{ item }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Comment Box</label>
+                  <textarea name="comment_box" class="form-control" cols="30" rows="10" style="max-width: 300px;"></textarea>
+                </div>
                 <button class="btn btn-dark mt-5" type="submit">Place Order!</button>
             </form>
 </section>
+<script>
+  document.getElementById('with_extra').onchange = function(){
+    document.getElementById('extra_food').disabled = !this.checked
+  }
+</script>
 {% endblock %}
