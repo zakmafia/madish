@@ -179,5 +179,13 @@ def order(request):
     return render(request, 'order_confirmation.html', context)
 
 
+def record(request):
+    orders = UserOrder.objects.filter(delivered=True).order_by('-id')
+    context = {
+        'orders': orders,
+    }
+    return render(request, 'record.html', context)
+
+
 def contact_us(request):
     return render(request, 'contact_us.html')
