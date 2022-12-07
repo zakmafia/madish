@@ -14,9 +14,11 @@ urlpatterns = [
     path('delete_category/<category_id>/', views.delete_category, name='delete_category'),
     path('delete_menu/<menu_id>/', views.delete_menu, name='delete_menu'),
     path('order/', views.order, name='order'),
+    path('confirm_order/', views.confirm_order, name='confirm_order'),
     path('order_ready/', views.order_ready, name='order_ready'),
     path('make_ready/<order_id>/', views.make_ready, name='make_ready'),
     path('make_delivered/<order_id>/', views.make_delivered, name='make_delivered'),
+    path('cancel_order/<order_id>/', views.cancel_order, name='cancel_order'),
     path('record/', views.record, name='record'),
 
     path('contact_us/', views.contact_us, name='contact_us')

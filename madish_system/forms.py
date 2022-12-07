@@ -19,7 +19,7 @@ class FoodMenuForm(ModelForm):
         )
     class Meta:
         model = FoodMenu
-        fields = ['name', 'image', 'detail', 'price', 'category']
+        fields = ['name', 'image', 'detail', 'price', 'category', 'with_extra']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter the name'}),
             'detail': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Enter the detail'}),

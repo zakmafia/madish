@@ -4,14 +4,17 @@
     <div class="container d-flex align-items-center justify-content-between">
 
       <div class="logo">
-        <h1><a href="{% url 'home' %}">Madish</a></h1>
+        {% comment %} <h1><a href="{% url 'home' %}">Madish</a></h1> {% endcomment %}
         <!-- Uncomment below if you prefer to use an image logo -->
-        <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+        <a href="{% url 'home' %}"><img src="{% static 'assets/img/design_nav.jpg' %}" alt="" class="img-fluid"></a>
+        <span class="madish-name-style" style="color: #ff0001;">Madish</span>
       </div>
 
       <nav id="navbar" class="navbar">
         <ul>
+          {% if user.id is None %}
           <li><a class="nav-link scrollto" href="{% url 'home' %}">Home</a></li>
+          {% endif %}
           {% if user.is_superadmin %}
           <li><a class="nav-link scrollto" href="{% url 'administrator_panel' %}">Administrator Panel</a></li>
           {% endif %}
@@ -22,8 +25,10 @@
           <li><a class="getstarted scrollto" href="{% url 'login' %}">Sign In</a></li>
           {% else %}
           <li><a class="nav-link scrollto" href="{% url 'order_history' %}">Order History</a></li>
+          {% if user.is_superadmin %}
           <li><a class="nav-link scrollto" href="{% url 'record' %}">Record</a></li>
-          <li><a class="getstarted scrollto" href="{% url 'order_ready' %}">Ready Order</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'order_ready' %}">Ready Order</a></li>
+          {% endif %}
           <li><a class="getstarted scrollto" href="{% url 'place_order' %}">Place Order</a></li>
           <li><a class="getstarted scrollto" href="{% url 'order_traffic' %}">Order Traffic</a></li>
           <li><small class="nav-link scrollto">|</small></li>

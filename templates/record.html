@@ -17,24 +17,57 @@
 </section><!-- End Breadcrumbs -->
 <section class="inner-page">
   <div class="container">
-    <table class="table">
-      <thead>
-        <tr>
-          <td scope="col">Email</td>
-          <td scope="col">Price</td>
-          <td scope="col">Created At</td>
-        </tr>
-      </thead>
-      <tbody>
-          {% for order in orders %}
-        <tr>
-          <td>{{ order.ordering_user.email }}</td>
-          <td>{{ order.price }} ETB</td>
-          <td>{{ order.created_on }}</td>
-        </tr>
-          {% endfor %}
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <td scope="col">Email</td>
+            <td scope="col">Food Ordered</td>
+            <td scope="col">Quantity</td>
+            <td scope="col">With</td>
+            <td scope="col">Price</td>
+            <td scope="col">Created At</td>
+          </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+          <tr>
+            <td>
+              <table class="table table-sm">
+                <tr>
+                  <td>{{ order.ordering_user.email }}</td>
+                </tr>
+                <tr>
+                  <td>{{ order.ordering_user.phone_number }}</td>
+                </tr>
+              </table>
+            </td>
+            <td>
+              <table class="table table-sm">
+                {% for item in order.food_menu.all %}
+                <tr>
+                  <td><span>*</span> {{ item }}</td>
+                </tr>
+                {% endfor %}
+              </table>
+            </td>
+            <td>
+              {{ order.get_quantity }} 
+            </td>
+            <td>
+              {% if order.extra_food %}
+              {{ order.get_extra_food }}
+              {% else %}
+              No Extra food
+              {% endif %}
+            </td>
+            <td>{{ order.price }} ETB</td>
+            <td>{{ order.created_on }}</td>
+          </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    </div>
   </div>
 </section>
 {% endblock %}

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.core.validators import RegexValidator
 # Create your models here.
 
 class MyAccountManager(BaseUserManager):
@@ -40,9 +41,8 @@ class Account(AbstractBaseUser):
     last_name = models.CharField(max_length=50)
     username = models.CharField(max_length=50, unique=True)
     email = models.EmailField(max_length=100, unique=True)
-    phone_number = models.CharField(max_length=50)
-    manager = models.EmailField(max_length=100, blank=True)
-    hr = models.EmailField(max_length=100, blank=True)
+    phone_regex = RegexValidator(regex=r'^\+?1?\d{10,12}$', message="Phone number must be entered in the format: '+9999999999'. Up to 12 digits allowed.")
+    phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True)
 
     #required
     date_joined = models.DateTimeField(auto_now_add=True)

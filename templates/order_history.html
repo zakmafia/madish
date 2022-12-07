@@ -21,19 +21,30 @@
       <thead>
         <tr>
           <td scope="col">Email</td>
-          <td scope="col">Food Menu</td>
+          <td scope="col">Foods Ordered</td>
         </tr>
       </thead>
       <tbody>
           {% for order in orders %}
         <tr>
           <td>
-            {{ order.ordering_user.email }}
+            <table class="table table-sm">
+              <tr>
+                <td>* {{ order.ordering_user.email }}</td>
+              </tr>
+              <tr>
+                <td>{{ order.ordering_user.phone_number }}</td>
+              </tr>
+            </table>
           </td>
           <td>
-            {% for item in order.food_menu.all %}
-            {{ item }} ||
-            {% endfor %}
+            <table class="table table-sm">
+              {% for item in order.food_menu.all %}
+              <tr>
+                <td><span>*</span> {{ item }}</td>
+              </tr>
+              {% endfor %}
+            </table>
           </td>
         </tr>
           {% endfor %}

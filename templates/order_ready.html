@@ -18,45 +18,88 @@
 <section class="inner-page">
   <div class="container">
     {% include 'includes/alerts.html' %}
-    <table class="table">
-      <thead>
-        <tr>
-          <td scope="col">Email</td>
-          <td scope="col">Ready</td>
-          <td scope="col">Delivered</td>
-        </tr>
-      </thead>
-      <tbody>
-          {% for order in orders %}
-        <tr>
-          <td>{{ order.ordering_user.email }}</td>
-          <td>
-            <a 
-            href="{% url 'make_ready' order.id %}"
-            {% if not order.ready %}
-            class="btn btn-warning"
-            {% else %}
-            class="btn btn-success"
-            {% endif %}
-            >
-            Ready
-            </a>
-    </td>
-          <td><a
-            href="{% url 'make_delivered' order.id %}"
-            {% if not order.delivered %}
-            class="btn btn-warning"
-            {% else %}
-            class="btn btn-success"
-            {% endif %}
-            >
-            Delivered
-        </a>
-    </td>
-        </tr>
-          {% endfor %}
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <td scope="col">Email</td>
+            <td scope="col">Foods Ordered</td>
+            <td scope="col">Quantity</td>
+            <td scope="col">With</td>
+            <td scope="col">Comment</td>
+            <td scope="col">Ready</td>
+            <td scope="col">Delivered</td>
+            <td scope="col">Cancel</td>
+          </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+          <tr>
+            <td>
+              <table class="table table-sm">
+                <tr>
+                  <td>{{ order.ordering_user.email }}</td>
+                </tr>
+                <tr>
+                  <td>{{ order.ordering_user.phone_number }}</td>
+                </tr>
+              </table>
+            </td>
+            <td>
+              <table class="table table-sm">
+                {% for item in order.food_menu.all %}
+                <tr>
+                  <td><span>*</span> {{ item }}</td>
+                </tr>
+                {% endfor %}
+              </table>
+            </td>
+            <td>
+              {{ order.get_quantity }}
+            </td>
+            <td>
+              {% if order.get_extra_food %}
+              {{ order.get_extra_food }}
+              {% else %}
+              No Extra food
+              {% endif %}
+            </td>
+            <td>
+              {% if order.user_comment %}
+              {{ order.user_comment }}
+              {% else %}
+              No Comment
+              {% endif %}
+            </td>
+            <td>
+              <a 
+              href="{% url 'make_ready' order.id %}"
+              {% if not order.ready %}
+              class="btn btn-warning"
+              {% else %}
+              class="btn btn-success"
+              {% endif %}
+              >
+              Ready
+              </a>
+            </td>
+            <td><a
+              href="{% url 'make_delivered' order.id %}"
+              {% if not order.delivered %}
+              class="btn btn-warning"
+              {% else %}
+              class="btn btn-success"
+              {% endif %}
+              >
+              Delivered
+          </a>
+          </td>
+          <td><a href="{% url 'cancel_order' order.id %}" class="btn btn-danger" onclick="return confirm('Are you sure you want to cancel this order?')">Cancel</a></td>
+          </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    </div>
   </div>
 </section>
 

@@ -18,29 +18,43 @@
 </section><!-- End Breadcrumbs -->
 <section class="inner-page">
   <div class="container">
-    <table class="table">
-      <thead>
-        <tr>
-          <td scope="col">Email</td>
-        </tr>
-      </thead>
-      <tbody>
-          {% for order in orders %}
-        <tr>
-          <td
-          {% if  user == order.ordering_user  %} 
-          style="background-color: yellow;"
-          {% endif %}
-          >
-            {{ order.ordering_user.email }}
-            {% if order.ready %}
-              <span style="background-color: green; margin-left: 60em; padding: 8px; color: white;"> Ready </span>
+    {% include 'includes/alerts.html' %}
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td scope="col">Email</td>
+          </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+          <tr>
+            <td
+            {% if  user == order.ordering_user  %} 
+            style="background-color: yellow;"
             {% endif %}
-          </td>
-        </tr>
-          {% endfor %}
-      </tbody>
-    </table>
+            >
+              <table class="table table-sm">
+                <tr>
+                  <td>
+                    * {{ order.ordering_user.email }}
+                    {% if order.ready %}
+                    <span style="background-color: green; margin-left: 60em; padding: 8px; color: white;"> Ready </span>
+                    {% endif %}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    {{ order.ordering_user.phone_number }}
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    </div>
   </div>
 </section>
 

@@ -20,6 +20,8 @@ from django.core.mail import EmailMessage
 current_year = datetime.now().year
 
 def register(request):
+    if request.user.is_authenticated:
+        return redirect('main_page')
     if request.method == 'POST':
         form = RegisterationForm(request.POST)
         if form.is_valid():
@@ -55,6 +57,8 @@ def register(request):
     return render(request, 'accounts/register.html', context)
 
 def login(request):
+    if request.user.is_authenticated:
+        return redirect('main_page')
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
