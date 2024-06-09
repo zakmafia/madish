@@ -23,23 +23,28 @@
       <table class="table table-striped">
         <thead>
           <tr>
+            {% if user.is_superadmin %}
             <td scope="col">Email</td>
+            {% else %}
+            <td scope="col">Name</td>
+            {% endif %}
           </tr>
         </thead>
         <tbody>
             {% for order in orders %}
           <tr>
             <td
-            {% if  user == order.ordering_user  %} 
+            {% if  user == order.ordering_user  %}
             style="background-color: yellow;"
             {% endif %}
             >
+            {% if user.is_superadmin %}
               <table class="table table-sm">
                 <tr>
                   <td>
                     * {{ order.ordering_user.email }}
                     {% if order.ready %}
-                    <span style="background-color: green; margin-left: 60em; padding: 8px; color: white;"> Ready </span>
+                    <span style="background-color: green; margin-left: 30em; padding: 8px; color: white;"> Ready </span>
                     {% endif %}
                   </td>
                 </tr>
@@ -49,6 +54,12 @@
                   </td>
                 </tr>
               </table>
+              {% else %}
+              {{ order.ordering_user.first_name }} {{ order.ordering_user.last_name }} {{ order.ordering_user.phone_number|slice:"-4:" }}
+              {% if order.ready %}
+              <span style="background-color: green; padding: 8px; color: white;"> Ready </span>
+              {% endif %}
+              {% endif %}
             </td>
           </tr>
             {% endfor %}

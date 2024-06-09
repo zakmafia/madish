@@ -72,7 +72,7 @@
               {% endif %}
             </td>
             <td>
-              <a 
+              <a
               href="{% url 'make_ready' order.id %}"
               {% if not order.ready %}
               class="btn btn-warning"
@@ -94,7 +94,7 @@
               Delivered
           </a>
           </td>
-          <td><a href="{% url 'cancel_order' order.id %}" class="btn btn-danger" onclick="return confirm('Are you sure you want to cancel this order?')">Cancel</a></td>
+          <td><a href="{% url 'cancel_order' order.id %}" class="btn btn-danger">Cancel</a></td>
           </tr>
             {% endfor %}
         </tbody>

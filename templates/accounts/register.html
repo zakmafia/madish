@@ -10,8 +10,8 @@
           </div>
           {% include 'includes/alerts.html' %}
           <div class="row">
-            <div class="image col-xl-5 d-flex align-items-stretch justify-content-center justify-content-xl-start" data-aos="fade-right" data-aos-delay="150">
-                <img src="{% static 'assets/img/counts-img.svg'%}" alt="" class="img-fluid">
+            <div class="image col-xl-5 d-flex" data-aos="fade-right" data-aos-delay="150">
+                <img src="{% static 'assets/img/sign_img.jpg'%}" alt="" class="img-fluid">
             </div>
             <div class="col-xl-5 pt-4 pt-xl-0" data-aos="fade-up" data-aos-delay="300">
               <form action="{% url 'register' %}" method="POST" class="php-email-form">
@@ -48,9 +48,9 @@
               </form>
               <p class="text-center mt-4">Have an account? <a href="{% url 'login' %}">Log In</a></p>
             </div>
-  
+
           </div>
-  
+
         </div>
       </section><!-- End Contact Section -->
 </main>

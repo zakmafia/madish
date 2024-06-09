@@ -1,7 +1,10 @@
 import json
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from django.contrib import messages
+from django.conf import settings
+from django.core.mail import EmailMessage, BadHeaderError
 from .models import FoodMenu, UserOrder, Category, ExtraFood
 from .forms import FoodMenuForm, CategoryForm
 
@@ -150,6 +153,27 @@ def create_menu(request):
         return redirect('main_page')
 
 @login_required(login_url='login')
+def edit_menu(request, menu_id):
+    if request.user.is_superadmin:
+        food_menu = FoodMenu.objects.get(id=menu_id)
+        if request.method == 'POST':
+            form = FoodMenuForm(request.POST, request.FILES, instance=food_menu)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'You have successfully edited the menu')
+                return redirect('view_menu')
+            else:
+                messages.error(request, 'Something went wrong!')
+        else:
+            form = FoodMenuForm(instance=food_menu)
+        context = {
+            'form': form
+        }
+        return render(request, 'edit_menu.html', context)
+    else:
+        return redirect('main_page')
+    
+@login_required(login_url='login')
 def view_menu(request):
     food_menus = FoodMenu.objects.all()
     context = {
@@ -222,9 +246,10 @@ def order(request):
         request.session['item_ids'] = item_ids
         request.session['quantity_list'] = quantity_list
         request.session['extra_food_collection'] = extra_food_collection
+        request.session['comment_box'] = comment_box
 
     context = {
-        'items': order_items['items'],
+        'items': joined_list,
         'price': price,
         'comment_box': comment_box,
         'extra_food_collection': extra_food_collection,
@@ -240,7 +265,7 @@ def confirm_order(request):
         quantity_list = request.session.get('quantity_list')
         extra_food_collection = request.session.get('extra_food_collection')
         price = request.POST['price']
-        user_comment = request.POST['comment_box']
+        user_comment = request.session.get('comment_box')
 
         order = UserOrder.objects.create(price=price, ordering_user=request.user, user_comment=user_comment)
         order.set_quantity(quantity_list)
@@ -265,4 +290,23 @@ def record(request):
 
 
 def contact_us(request):
+    if request.method == "POST":
+        email = request.POST['email']
+        phone_number = request.POST['phone_number']
+        detail = request.POST['detail']
+        to_email ='madishrestorant@gmail.com'
+        subject = 'Contact Us' 
+        body = {
+            'email': email,
+            'phone': phone_number,
+            'detail': detail
+        }
+        message = "\n".join(body.values())
+        send_email = EmailMessage(subject, message, to=[to_email], from_email=email)
+        try:
+            send_email.send(fail_silently=False)
+            messages.success(request, 'Message Sent!')
+        except BadHeaderError:
+            return HttpResponse('Invalid header found.')
+	
     return render(request, 'contact_us.html')

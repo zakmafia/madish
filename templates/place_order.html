@@ -28,28 +28,35 @@
                           <img class="rounded" src="{{ menu.image.url }}" width="100" height="100"/>
                       </div>
                       <div class="col-md-8 col-sm-12">
-                              <div class="form-group form-check">
-                                <input type="hidden" id="hidden">
+                        <div class="row">
+                              <div class="form-group form-check col">
                                   <input type="checkbox" id="{{ menu.pk }}" name="items" class="form-check-input" value="{{ menu.pk }}">
                                   <label class="form-check-label">{{ menu.name }}</label>
                               </div>
-                              <br>
-                              <div class="form-group">
-                                <p class="font-weight-bold pl-5">{{ menu.price }}</p>
-                              </div>
-                              <div class="form-group">
-                                <input type="number" id="quantity_{{ menu.id }}" name="quantities" min="1" max="10" disabled="true" value="1">
+                                <div class="form-group col">
+                                  <p class="font-weight-bold pl-5" style="color: red;">{{ menu.price }} ETB</p>
+                                </div>
+                                <div class="form-group col">
+                                  Quantity
+                                  <input type="number" id="quantity_{{ menu.id }}" name="quantities" min="1" max="10" disabled="true" value="1">
+                                </div>
                               </div>
                               <br>
                               {% if menu.with_extra %}
-                              <div class="form-group">
-                                <label>With</label>
-                                <input type="checkbox" id="with_extra_{{ menu.id }}" name="with_extra" class="form-check-input">
-                                <select name="extra_food_collection" id="extra_food_{{ menu.id }}" disabled="true">
-                                  {% for item in extra_food_list %}
-                                  <option>{{ item }}</option>
-                                  {% endfor %}
-                                </select>
+                              <div class="container">
+                                  <div class="row">
+                                    <div class="col align-self-start"></div>
+                                  <div class="col align-self-center"></div>
+                                  <div class="col align-self-end">
+                                    <label>With</label>
+                                    <input type="checkbox" id="with_extra_{{ menu.id }}" name="with_extra" class="form-check-input">
+                                    <select name="extra_food_collection" id="extra_food_{{ menu.id }}" disabled="true">
+                                      {% for item in extra_food_list %}
+                                      <option>{{ item }}</option>
+                                      {% endfor %}
+                                    </select>
+                                  </div>
+                                  </div>
                               </div>
                               {% endif %}
                          <p>{{ menu.description }}</p>

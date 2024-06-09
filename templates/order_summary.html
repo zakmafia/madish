@@ -14,19 +14,20 @@
                 {% csrf_token %}
                 <h3 class="pb-3">Order Summary:</h3>
                 {% for item in items %}
-                    <p>{{ item.name }} <span class="pl-3">{{ item.price }} ETB</span></p>
+                    <p>{{ item.name }} <span class="pl-3">{{ item.price }} ETB</span><span class="pl-3"> * {{ item.quantity }} times</span></p>
                 {% endfor %}
+                <p>{% if extra_food_collection %} With: {% endif %} {% for extra in extra_food_collection %} * {{ extra }}  {% endfor %}</p>
                 <input type="hidden" name="item_ids" value="{{ item_ids }}">
                 <input type="hidden" name="quantity_list" value="{{ quantity_list }}">
                 <input type="hidden" name="extra_food_collection" value="{{ extra_food_collection }}">
                 <div class="form-group">
-                    Total Price:
-                    <input type="text" name="price" value="{{ price }}" readonly> ETB
+                    Total Price
+                    <input type="text" value="{{ price }}" name="price" readonly > ETB
                 </div>
                 <br>
                 <div class="form-group">
                     <label>Comment Box</label>
-                    <textarea name="comment_box" class="form-control" cols="30" rows="10" value="{{ comment_box }}" readonly></textarea>
+                    <textarea name="comment_box" class="form-control" cols="30" rows="10" readonly>{{ comment_box }}</textarea>
                 </div>
                 <button class="btn btn-dark mt-5" type="submit">Confirm Order!</button>
             </form>

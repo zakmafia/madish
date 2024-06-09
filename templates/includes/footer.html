@@ -12,11 +12,8 @@
           </div>
         </div>
         <div class="col-lg-6">
-          <nav class="footer-links text-lg-right text-center pt-2 pt-lg-0">
-            <a href="#intro" class="scrollto">Home</a>
-            <a href="#about" class="scrollto">About</a>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Use</a>
+          <nav class="footer-links text-lg-right text-center pt-2 pt-lg-0 my-auto">
+            <a href="https://www.instagram.com/madishrestorant/" class="my-auto"><i style="font-size:20px;" class="bx bxl-instagram"></i></a>
           </nav>
         </div>
       </div>
@@ -38,7 +35,7 @@
   <script src="{% static 'assets/js/main.js'%}"></script>
   <script>
     function autorefresh(){
-      setInterval('refreshPage()', 10000);
+      setInterval('refreshPage()', 60000);
     }
     function refreshPage(){
       $.ajax({
